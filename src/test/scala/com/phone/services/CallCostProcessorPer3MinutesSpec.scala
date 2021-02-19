@@ -21,7 +21,7 @@ class CallCostProcessorPer3MinutesSpec extends BaseSpec {
     val current = calculator.calculateCost(input)
     val expected = CallPrice(minutes * 3.0)
 
-    current.get(input.head).get should be(expected)
+    current(input.head) should be(expected)
   }
 
   it should "return correct price for call exact 3 minutes" in {
@@ -32,7 +32,7 @@ class CallCostProcessorPer3MinutesSpec extends BaseSpec {
     val current = calculator.calculateCost(input)
     val expected = CallPrice(minutes * 3.0)
 
-    current.get(input.head).get should be(expected)
+    current(input.head) should be(expected)
   }
 
 
@@ -45,7 +45,7 @@ class CallCostProcessorPer3MinutesSpec extends BaseSpec {
     val current = calculator.calculateCost(input)
     val expected = CallPrice((firstMinutes * 3.0) + (extraMinutes * 1.8))
 
-    current.get(input.head).get should be(expected)
+    current(input.head) should be(expected)
   }
 
 }

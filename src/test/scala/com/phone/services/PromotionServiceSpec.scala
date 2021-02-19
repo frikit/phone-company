@@ -29,11 +29,13 @@ class PromotionServiceSpec extends BaseSpec {
   }
 
   it should "filter calls by one promotion" in {
-    promotionService.applyPromotions(callsHistory, promotionForCustomerA).size should be(3) //only B remain
+    val expected = callsHistory.filter(e => e._1.customerID != "A")
+    promotionService.applyPromotions(callsHistory, promotionForCustomerA).size should be(expected.size) //only B remain
   }
 
   it should "filter calls by one promotion2" in {
-    promotionService.applyPromotions(callsHistory, promotionForCustomerB).size should be(2) //only A remain
+    val expected = callsHistory.filter(e => e._1.customerID != "B")
+    promotionService.applyPromotions(callsHistory, promotionForCustomerB).size should be(expected.size) //only A remain
   }
 
   it should "filter calls by two promotions" in {
