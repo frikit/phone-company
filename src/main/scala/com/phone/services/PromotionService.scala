@@ -5,6 +5,11 @@ import com.phone.promotions.Promotion
 
 class PromotionService {
 
-  def applyPromotions(calls: Map[CustomerCall, CallPrice], promotions: Promotion*): Map[CustomerCall, CallPrice] =
-    calls.filter(e => promotions.forall(p => p.applyPromotion(Map(e._1 -> e._2)).nonEmpty))
+  def applyPromotions(calls: Map[CustomerCall, CallPrice], promotions: Promotion*): Map[CustomerCall, CallPrice] = {
+    var r = calls
+    for(p <- promotions) {
+      r = p.applyPromotion(r)
+    }
+    r
+  }
 }
