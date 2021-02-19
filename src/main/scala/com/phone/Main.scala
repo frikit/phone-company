@@ -6,7 +6,7 @@ import com.phone.services.{CallCostProcessorPer3Minutes, PromotionService}
 
 object Main extends App {
 
-  val file = io.Source.fromFile("/Users/frikit/IdeaProjects/phone-company2/src/main/resources/calls.log")
+  val file = io.Source.fromFile("./src/main/resources/calls.log")
   val logParser = new LogParser()
 
   val calls = logParser.readLines(file)
