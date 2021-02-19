@@ -1,4 +1,4 @@
-package com.phone.parser
+package com.phone.parsers
 
 import com.phone.BaseSpec
 import com.phone.models.{CallDuration, CustomerCall, PhoneNumber}

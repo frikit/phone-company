@@ -1,4 +1,4 @@
-package com.phone.parser
+package com.phone.parsers
 
 import scala.io.Source
 
