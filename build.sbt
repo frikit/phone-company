@@ -6,6 +6,7 @@ lazy val phoneCompany = (project in file(".")).settings(
     libraryDependencies ++= Seq(
       "org.scalactic" %% "scalactic" % "3.2.2" % "test",
       "org.scalatest" %% "scalatest" % "3.2.2" % "test"
-    )
+    ),
+    coverageEnabled := true
   )
 )

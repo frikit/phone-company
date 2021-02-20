@@ -42,4 +42,27 @@ class LogParserSpec extends BaseSpec {
 
     parser.readLines(stringStream).length should be(0)
   }
+
+  val invalidRowCombinations = List(
+    "A",//1
+    "A A",//2
+    "A A A A",//4
+    "A A A A A",//5
+  )
+
+  invalidRowCombinations.foreach{ string =>
+    val required = 3
+    val input = string.split(" ").length
+    val exceptedExceptionError = s"Line should contains $required fields! Your line is $string"
+
+    it should s"throw exception when try to parse a row with $input value($required required)" in {
+      val stringStream = Source.fromString(string)
+
+      val exception = intercept[RuntimeException](
+        parser.readLines(stringStream)
+      )
+
+      exception.getMessage should be(exceptedExceptionError)
+    }
+  }
 }

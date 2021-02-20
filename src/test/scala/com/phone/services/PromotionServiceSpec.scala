@@ -3,6 +3,7 @@ package com.phone.services
 import com.phone.BaseSpec
 import com.phone.models.{CallDuration, CallPrice, CustomerCall, PhoneNumber}
 import com.phone.promotions.Promotion
+import org.scalatest.Inspectors.forAll
 
 import java.time.Duration
 
@@ -28,14 +29,22 @@ class PromotionServiceSpec extends BaseSpec {
     promotionService.applyPromotions(callsHistory, noPromotion) should be(callsHistory)
   }
 
-  it should "filter calls by one promotion" in {
+  it should "filter calls by one promotion by customer A" in {
     val expected = callsHistory.filter(e => e._1.customerID != "A")
-    promotionService.applyPromotions(callsHistory, promotionForCustomerA).size should be(expected.size) //only B remain
+
+    val history = promotionService.applyPromotions(callsHistory, promotionForCustomerA)
+    history.size should be(expected.size) //only B remain
+    forAll(history) { x => x._1.customerID should be("B")}
+    forAll(history) { x => x._1.customerID shouldNot be("A")}
   }
 
-  it should "filter calls by one promotion2" in {
+  it should "filter calls by one promotion by customer B" in {
     val expected = callsHistory.filter(e => e._1.customerID != "B")
-    promotionService.applyPromotions(callsHistory, promotionForCustomerB).size should be(expected.size) //only A remain
+
+    val history = promotionService.applyPromotions(callsHistory, promotionForCustomerB)
+    history.size should be(expected.size) //only A remain
+    forAll(history) { x => x._1.customerID should be("A")}
+    forAll(history) { x => x._1.customerID shouldNot be("B")}
   }
 
   it should "filter calls by two promotions" in {

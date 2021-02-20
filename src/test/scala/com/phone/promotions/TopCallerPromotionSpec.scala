@@ -2,6 +2,7 @@ package com.phone.promotions
 
 import com.phone.BaseSpec
 import com.phone.models.{CallDuration, CallPrice, CustomerCall, PhoneNumber}
+import org.scalatest.Inspectors.forAll
 
 import java.time.Duration
 
@@ -22,10 +23,13 @@ class TopCallerPromotionSpec extends BaseSpec {
   )
 
   "Top Caller promotion" should "remove top caller from list" in {
-    topCallerPromotions.applyPromotion(callsHistory).size should be(callsHistory.size - 1)//remove C from list
+    val history = topCallerPromotions.applyPromotion(callsHistory)
+
+    history.size should be(callsHistory.size - 1) //remove C from list
+    forAll(history) { x => x._1.customerID shouldNot be("C") }
   }
 
   it should "return the same list if list is empty" in {
-    topCallerPromotions.applyPromotion(Map()).size should be(0)//none are removed from list
+    topCallerPromotions.applyPromotion(Map()).size should be(0) //none are removed from list
   }
 }
